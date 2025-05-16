@@ -47,8 +47,16 @@ books = [
 
 class BookListResource(Resource):
     def get(self):
-        """获取所有图书"""
-        return {'books': books}, 200
+        """获取所有图书，支持按作者名字进行搜索和过滤"""
+        author = request.args.get('author')
+        
+        if author:
+            # 如果提供了作者参数，按作者名字过滤图书
+            filtered_books = [book for book in books if author in book['author']]
+            return {'books': filtered_books}, 200
+        else:
+            # 否则返回所有图书
+            return {'books': books}, 200
     
     def post(self):
         """添加新图书"""

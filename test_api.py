@@ -25,6 +25,27 @@ class BookstoreAPITest(unittest.TestCase):
         self.assertIn('books', data)
         self.assertIsInstance(data['books'], list)
         print(f"获取所有图书成功，共 {len(data['books'])} 本图书")
+        
+    def test_01a_search_books_by_author(self):
+        """测试按作者名字搜索图书"""
+        # 搜索刘慈欣的书
+        response = requests.get(f"{BASE_URL}/books?author=刘慈欣")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('books', data)
+        self.assertIsInstance(data['books'], list)
+        # 验证所有返回的书籍作者名字中包含"刘慈欣"
+        for book in data['books']:
+            self.assertIn('刘慈欣', book['author'])
+        print(f"按作者'刘慈欣'搜索图书成功，找到 {len(data['books'])} 本图书")
+        
+        # 搜索不存在的作者
+        response = requests.get(f"{BASE_URL}/books?author=不存在的作者")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('books', data)
+        self.assertEqual(len(data['books']), 0)
+        print("搜索不存在作者测试通过")
     
     def test_02_get_book_by_id(self):
         """测试获取单本图书"""
