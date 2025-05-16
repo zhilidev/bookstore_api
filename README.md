@@ -5,6 +5,7 @@
 ## 功能
 
 - 获取所有图书
+- 按作者名字搜索图书
 - 获取单本图书详情
 - 添加新图书
 - 更新图书信息
@@ -32,6 +33,7 @@ python test_api.py
 ## API端点
 
 - `GET /api/books` - 获取所有图书
+- `GET /api/books?author=作者名` - 按作者名字搜索图书
 - `POST /api/books` - 添加新图书
 - `GET /api/books/<id>` - 获取单本图书详情
 - `PUT /api/books/<id>` - 更新图书信息
@@ -43,6 +45,12 @@ python test_api.py
 
 ```
 GET /api/books
+```
+
+### 按作者名字搜索图书
+
+```
+GET /api/books?author=刘慈欣
 ```
 
 ### 添加新图书
